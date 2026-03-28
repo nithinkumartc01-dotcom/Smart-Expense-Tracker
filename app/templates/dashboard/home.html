@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartX - Premium Experience</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Google Fonts: Playfair Display (Serif) & Manrope (Sans) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='img/white logo.png') }}" type="image/png">
+
+    <style>
+        :root {
+            --color-navy: #0F172A;
+            --color-blue: #2563EB; 
+            --color-blue-light: #EFF6FF;
+            --color-charcoal: #1A1A1A;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Manrope', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--color-navy);
+            background-color: #FAFAFA;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: var(--font-serif);
+        }
+
+        /* Sticky Glassmorphism Header */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link {
+            color: var(--color-navy);
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-link:hover {
+            color: var(--color-blue);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            background: radial-gradient(circle at 80% 20%, #f8f9fa, #ffffff);
+            position: relative;
+            padding-top: 80px;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            line-height: 1.1;
+            color: var(--color-navy);
+            margin-bottom: 1.5rem;
+        }
+
+        .text-blue {
+            color: var(--color-blue) !important;
+        }
+
+        /* 3D Abstract Glass Centerpiece Simulation */
+        .glass-centerpiece {
+            width: 100%;
+            height: 600px;
+            background: 
+                linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1)),
+                url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            border-radius: 200px 200px 0 0;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.1);
+            mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+        }
+
+        /* Buttons */
+        .btn-blue {
+            background-color: var(--color-blue);
+            color: #fff;
+            border-radius: 50px;
+            padding: 14px 36px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            border: 1px solid var(--color-blue);
+            transition: all 0.3s;
+        }
+        
+        .btn-blue:hover {
+            background-color: transparent;
+            color: var(--color-blue);
+        }
+
+        /* Services Cards */
+        .service-card {
+            border: none;
+            background: #fff;
+            padding: 4rem 2rem;
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--color-charcoal);
+            color: #fff;
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #0F172A;
+            color: #F8FAFC;
+        }
+        body.dark-mode .glass-nav {
+            background: rgba(15, 23, 42, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        body.dark-mode .nav-link {
+            color: #E2E8F0;
+        }
+        body.dark-mode .nav-link:hover {
+            color: var(--color-blue);
+        }
+        body.dark-mode .hero-section {
+            background: radial-gradient(circle at 80% 20%, #1e293b, #0f172a);
+        }
+        body.dark-mode .hero-title {
+            color: #F8FAFC;
+        }
+        body.dark-mode .service-card,
+        body.dark-mode .card {
+            background-color: #1E293B;
+            color: #F8FAFC;
+        }
+        body.dark-mode .bg-white {
+            background-color: #0F172A !important;
+        }
+        body.dark-mode .bg-light {
+            background-color: #1E293B !important;
+        }
+        body.dark-mode .text-muted {
+            color: #94a3b8 !important;
+        }
+        body.dark-mode .accordion-button {
+            background-color: transparent;
+            color: #F8FAFC;
+        }
+        body.dark-mode .accordion-button::after {
+            filter: invert(1);
+        }
+        body.dark-mode .accordion-button:not(.collapsed) {
+            color: var(--color-blue);
+            box-shadow: none;
+        }
+        body.dark-mode .form-control {
+            background-color: #1E293B;
+            border-color: #334155;
+            color: #F8FAFC;
+        }
+        body.dark-mode .navbar-toggler-icon {
+            filter: invert(1);
+        }
+        
+        /* Partner Logos */
+        .partner-logo {
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            max-height: 50px;
+            width: auto;
+        }
+        .partner-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+        
+        .brand-text {
+            font-family: var(--font-serif);
+            color: var(--color-navy);
+            transition: color 0.3s ease;
+        }
+        
+        body.dark-mode .brand-text {
+            color: #F8FAFC;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Sticky Glassmorphism Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top glass-nav py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                <img src="{{ url_for('static', filename='img/black logo.png') }}" id="nav-logo" alt="SmartX Logo" height="40">
+                <span class="fw-bold brand-text">SmartX</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-3">
+                    <li class="nav-item">
+                        <button class="btn nav-link" id="theme-toggle" title="Toggle Theme">
+                            <i class="bi bi-moon-stars"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#story">Our Story</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#philosophy">Philosophy</a></li>
+                    {% if session.get('user') %}
+                        <li class="nav-item"><a class="btn btn-blue ms-3" href="/tracker">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                        <li class="nav-item"><a class="btn btn-blue ms-3" href="/register">Get Started</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Hero Section -->
+    <section class="hero-section d-flex align-items-center">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 pe-lg-5">
+                    <span class="text-uppercase text-blue mb-3 d-block small" style="letter-spacing: 2px;">Est. 2026</span>
+                    <h1 class="hero-title">
+                        Master Your <br>
+                        <span class="fst-italic text-blue">Financial Future.</span>
+                    </h1>
+                    <p class="lead text-muted mb-5 fw-light">
+                        Experience the next generation of expense tracking. SmartX combines AI-driven insights with intuitive design to give you complete control over your wealth, investments, and daily spending.
+                    </p>
+                    <a href="#story" class="btn btn-outline-dark rounded-pill px-4 py-3 text-uppercase small" style="letter-spacing: 1px;">Discover More</a>
+                </div>
+                <div class="col-lg-7">
+                    <div class="glass-centerpiece"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Our Story -->
+    <section id="story" class="py-5 my-5">
+        <div class="container py-5">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h6 class="text-blue text-uppercase mb-4" style="letter-spacing: 2px;">Our Story</h6>
+                    <h2 class="display-5 mb-4">Redefining Personal Finance</h2>
+                    <p class="text-muted fs-5 fw-light lh-lg">
+                        Founded on the principles of clarity and precision, SmartX began as a vision to simplify the complex world of personal finance. We realized that traditional spreadsheets were outdated and banking apps were too cluttered. We set out to build a sanctuary for your data—a platform where every transaction tells a story, and every insight empowers you to build a lasting legacy.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Core Services -->
+    <section id="services" class="py-5 bg-light bg-opacity-25">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="service-card h-100 text-center">
+                        <i class="bi bi-gem fs-1 text-blue mb-4"></i>
+                        <h4 class="mb-3">Smart Tracking</h4>
+                        <p class="text-muted fw-light">Effortlessly log expenses with our intelligent categorization engine. We turn raw data into clear, actionable financial patterns.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card h-100 text-center">
+                        <i class="bi bi-layers fs-1 text-blue mb-4"></i>
+                        <h4 class="mb-3">Predictive Analytics</h4>
+                        <p class="text-muted fw-light">Our AI forecasts your spending trends, helping you plan for the future with precision and foresight before the month even begins.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card h-100 text-center">
+                        <i class="bi bi-palette fs-1 text-blue mb-4"></i>
+                        <h4 class="mb-3">Wealth Management</h4>
+                        <p class="text-muted fw-light">Beyond just expenses, track your net worth, manage budgets, and curate a financial lifestyle that aligns with your long-term goals.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3.5. The Process (New Section) -->
+    <section id="process" class="py-5">
+        <div class="container py-5">
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-lg-8">
+                    <h6 class="text-blue text-uppercase mb-3" style="letter-spacing: 2px;">The Process</h6>
+                    <h2 class="display-5">From Chaos to Clarity</h2>
+                </div>
+            </div>
+            <div class="row g-5">
+                <div class="col-md-4 text-center">
+                    <div class="display-1 text-blue opacity-25 mb-3" style="font-family: var(--font-serif);">01</div>
+                    <h4 class="mb-3">Connect</h4>
+                    <p class="text-muted fw-light">Securely link your bank accounts or start manually. We begin by aggregating your financial footprint into one unified dashboard.</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="display-1 text-blue opacity-25 mb-3" style="font-family: var(--font-serif);">02</div>
+                    <h4 class="mb-3">Analyze</h4>
+                    <p class="text-muted fw-light">Our algorithms strip away the noise, categorizing transactions and highlighting areas where you can optimize your spending.</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="display-1 text-blue opacity-25 mb-3" style="font-family: var(--font-serif);">03</div>
+                    <h4 class="mb-3">Grow</h4>
+                    <p class="text-muted fw-light">With clear data in hand, execute your financial goals. Watch your savings grow and your financial anxiety disappear.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banking Partners (New Section) -->
+    <section class="py-5 bg-light bg-opacity-50">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h6 class="text-blue text-uppercase mb-3" style="letter-spacing: 2px;">Our Partners</h6>
+                <h2 class="display-5">Trusted by India's Top Banks</h2>
+                <p class="text-muted fw-light">Seamlessly integrated with the nation's leading financial institutions.</p>
+            </div>
+            <div class="row justify-content-center align-items-center g-5">
+                <div class="col-6 col-md-3 text-center">
+                    <img src="https://logo.clearbit.com/sbi.co.in" alt="State Bank of India" class="partner-logo img-fluid">
+                    <p class="mt-2 small text-muted">SBI</p>
+                </div>
+                <div class="col-6 col-md-3 text-center">
+                    <img src="https://logo.clearbit.com/hdfcbank.com" alt="HDFC Bank" class="partner-logo img-fluid">
+                    <p class="mt-2 small text-muted">HDFC Bank</p>
+                </div>
+                <div class="col-6 col-md-3 text-center">
+                    <img src="https://logo.clearbit.com/icicibank.com" alt="ICICI Bank" class="partner-logo img-fluid">
+                    <p class="mt-2 small text-muted">ICICI Bank</p>
+                </div>
+                <div class="col-6 col-md-3 text-center">
+                    <img src="https://logo.clearbit.com/axisbank.com" alt="Axis Bank" class="partner-logo img-fluid">
+                    <p class="mt-2 small text-muted">Axis Bank</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Brand Philosophy -->
+    <section id="philosophy" class="py-5 my-5">
+        <div class="container py-5">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2301&auto=format&fit=crop" 
+                         alt="Office Lifestyle" class="img-fluid shadow-lg rounded-4">
+                </div>
+                <div class="col-lg-5 offset-lg-1">
+                    <h6 class="text-blue text-uppercase mb-3" style="letter-spacing: 2px;">Philosophy</h6>
+                    <h2 class="display-5 mb-4">Financial Intelligence Made Visible</h2>
+                    <p class="text-muted mb-4 fw-light">
+                        We don't just track numbers; we construct financial sanctuaries. Our philosophy is rooted in the belief that every rupee serves a purpose, and managing it should feel effortless, not exhaustive.
+                    </p>
+                    <ul class="list-unstyled text-muted fw-light">
+                        <li class="mb-3"><i class="bi bi-check2 text-blue me-2"></i> Bank-Grade Security</li>
+                        <li class="mb-3"><i class="bi bi-check2 text-blue me-2"></i> Real-Time Synchronization</li>
+                        <li class="mb-3"><i class="bi bi-check2 text-blue me-2"></i> User-Centric Privacy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4.5. The Emblem (New Section) -->
+    <section class="py-5 bg-white">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 text-center">
+                    <img src="{{ url_for('static', filename='img/black logo.png') }}" id="emblem-logo" alt="SmartX Emblem" class="img-fluid mb-4 mb-lg-0" style="max-height: 800px;">
+                </div>
+                <div class="col-lg-6">
+                    <h6 class="text-blue text-uppercase mb-3" style="letter-spacing: 2px;">The Emblem</h6>
+                    <h2 class="display-5 mb-4">Symbol of Precision</h2>
+                    <p class="text-muted fs-5 fw-light mb-4">
+                        The SmartX emblem represents the convergence of financial clarity and technological innovation.
+                    </p>
+                    <div class="d-flex gap-4 mt-4">
+                        <div>
+                            <h5 class="mb-2">The Circle</h5>
+                            <p class="text-muted small fw-light">Represents wholeness and the continuous cycle of wealth generation.</p>
+                        </div>
+                        <div>
+                            <h5 class="mb-2">The X</h5>
+                            <p class="text-muted small fw-light">Symbolizes the precise intersection where data meets decision-making.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Customer Reviews -->
+    <section class="py-5 bg-light bg-opacity-10">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h6 class="text-blue text-uppercase mb-3" style="letter-spacing: 2px;">Testimonials</h6>
+                <h2 class="display-5">Trusted by Visionaries</h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm p-4 rounded-4 text-center">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop" class="rounded-circle mx-auto mb-3" width="80" height="80" alt="User">
+                        <p class="text-muted fst-italic mb-3">"The financial insights are game-changing. SmartX brings a level of clarity I haven't found elsewhere."</p>
+                        <h6 class="fw-bold mb-0">Sarah Jenkins</h6>
+                        <small class="text-blue">Small Business Owner</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm p-4 rounded-4 text-center">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop" class="rounded-circle mx-auto mb-3" width="80" height="80" alt="User">
+                        <p class="text-muted fst-italic mb-3">"Finally, a tracker that looks as good as it works. The interface is intuitive and simply beautiful."</p>
+                        <h6 class="fw-bold mb-0">Michael Chen</h6>
+                        <small class="text-blue">Freelance Developer</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm p-4 rounded-4 text-center">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop" class="rounded-circle mx-auto mb-3" width="80" height="80" alt="User">
+                        <p class="text-muted fst-italic mb-3">"Minimalist, powerful, and precise. It makes managing personal finances actually enjoyable."</p>
+                        <h6 class="fw-bold mb-0">Elena Rodriguez</h6>
+                        <small class="text-blue">Financial Analyst</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. FAQ Section (New Section) -->
+    <section id="faq" class="py-5 bg-light bg-opacity-25">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="text-center mb-5">
+                        <h6 class="text-blue text-uppercase mb-3" style="letter-spacing: 2px;">Inquiries</h6>
+                        <h2 class="display-5">Common Questions</h2>
+                    </div>
+                    
+                    <div class="accordion accordion-flush" id="faqAccordion">
+                        <div class="accordion-item bg-transparent border-bottom border-secondary border-opacity-25">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-transparent shadow-none fs-5 py-4" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    Is SmartX free to use?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted fw-light pb-4">
+                                    Yes, SmartX offers a robust free tier that includes manual tracking, basic charts, and monthly reports. We also offer a Premium tier for automated bank syncing and advanced AI insights.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item bg-transparent border-bottom border-secondary border-opacity-25">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-transparent shadow-none fs-5 py-4" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    How secure is my bank data?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted fw-light pb-4">
+                                    We use 256-bit encryption and read-only access tokens. We never store your bank login credentials, ensuring your financial data remains strictly private and secure.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item bg-transparent border-bottom border-secondary border-opacity-25">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-transparent shadow-none fs-5 py-4" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    Is my financial data secure?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted fw-light pb-4">
+                                    Security is paramount. We use bank-grade encryption to ensure your data remains private and protected at all times.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item bg-transparent border-bottom border-secondary border-opacity-25">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-transparent shadow-none fs-5 py-4" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    Can I export my data?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted fw-light pb-4">
+                                    Yes, SmartX allows you to export your financial reports in multiple formats including PDF and CSV for external analysis.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item bg-transparent border-bottom border-secondary border-opacity-25">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-transparent shadow-none fs-5 py-4" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    Is there a mobile application?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted fw-light pb-4">
+                                    SmartX is designed as a progressive web app, offering a seamless native-like experience on all mobile devices without needing a download.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item bg-transparent border-bottom border-secondary border-opacity-25">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-transparent shadow-none fs-5 py-4" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                                    What currencies do you support?
+                                </button>
+                            </h2>
+                            <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted fw-light pb-4">
+                                    We support over 150 global currencies with real-time conversion rates, perfect for international travelers and global citizens.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item bg-transparent border-bottom border-secondary border-opacity-25">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-transparent shadow-none fs-5 py-4" type="button" data-bs-toggle="collapse" data-bs-target="#faq7">
+                                    Do you offer family plans?
+                                </button>
+                            </h2>
+                            <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted fw-light pb-4">
+                                    Yes, our 'Household' tier allows for shared wallets and collaborative budgeting features to manage family finances together.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item bg-transparent border-bottom border-secondary border-opacity-25">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-transparent shadow-none fs-5 py-4" type="button" data-bs-toggle="collapse" data-bs-target="#faq8">
+                                    How does the categorization work?
+                                </button>
+                            </h2>
+                            <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted fw-light pb-4">
+                                    Our AI automatically categorizes your transactions based on merchant codes, though you retain full control to customize categories.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Newsletter (New Section) -->
+    <section class="py-5 bg-white">
+        <div class="container py-5">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-6">
+                    <h2 class="display-6 mb-4">Join the Inner Circle</h2>
+                    <p class="text-muted fw-light mb-4">Receive curated insights on design, technology, and modern luxury.</p>
+                    <form class="d-flex gap-2">
+                        <input type="email" class="form-control rounded-0 py-3 px-4" placeholder="Your email address">
+                        <button class="btn btn-blue px-4" type="button">SUBSCRIBE</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deep Charcoal Footer -->
+    <footer class="py-5">
+        <div class="container pt-4">
+            <div class="row g-4">
+                <div class="col-lg-3">
+                    <div class="d-flex align-items-center gap-2 mb-4">
+                        <img src="{{ url_for('static', filename='img/white logo.png') }}" alt="SmartX Logo" height="40">
+                        <span class="h4 mb-0 text-white" style="font-family: var(--font-serif);">SmartX</span>
+                    </div>
+                    <p class="text-white-50 fw-light">Redefining digital luxury for the modern era using a smart Expense tracker Called SmartX.</p>
+                </div>
+                <div class="col-lg-2 offset-lg-1">
+                    <h5 class="h6 text-blue mb-4 text-uppercase" style="letter-spacing: 1px;">Platform</h5>
+                    <ul class="list-unstyled text-white-50 small fw-light">
+                        <li class="mb-2"><a href="#" class="text-reset text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="#story" class="text-reset text-decoration-none">Our Story</a></li>
+                        <li class="mb-2"><a href="#services" class="text-reset text-decoration-none">Services</a></li>
+                        <li class="mb-2"><a href="#philosophy" class="text-reset text-decoration-none">Philosophy</a></li>
+                        <li class="mb-2"><a href="/register" class="text-reset text-decoration-none">Get Started</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="h6 text-blue mb-4 text-uppercase" style="letter-spacing: 1px;">Support</h5>
+                    <ul class="list-unstyled text-white-50 small fw-light">
+                        <li class="mb-2"><a href="/contact" class="text-reset text-decoration-none">Contact Us</a></li>
+                        <li class="mb-2"><a href="#faq" class="text-reset text-decoration-none">FAQs</a></li>
+                        <li class="mb-2"><a href="#" class="text-reset text-decoration-none">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="#" class="text-reset text-decoration-none">Terms of Service</a></li>
+                        <li class="mb-2"><a href="#" class="text-reset text-decoration-none">Security</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="h6 text-blue mb-4 text-uppercase" style="letter-spacing: 1px;">Contact</h5>
+                    <ul class="list-unstyled text-white-50 small fw-light">
+                        <li class="mb-2">NithinReddy@gmail.com</li>
+                        <li class="mb-2">+91 81471 81544</li>
+                    </ul>
+                    <div class="d-flex gap-3 mt-4">
+                        <a href="#" class="text-white-50 text-decoration-none"><i class="bi bi-instagram fs-5"></i></a>
+                        <a href="#" class="text-white-50 text-decoration-none"><i class="bi bi-twitter-x fs-5"></i></a>
+                        <a href="#" class="text-white-50 text-decoration-none"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-white-50 text-decoration-none"><i class="bi bi-linkedin fs-5"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5 pt-4 border-top border-secondary">
+                <div class="col-12 text-center text-white-50 small">
+                    &copy; 2026 SmartX. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Theme Toggle Logic
+        const toggleBtn = document.getElementById('theme-toggle');
+        const icon = toggleBtn.querySelector('i');
+        const navLogo = document.getElementById('nav-logo');
+        const emblemLogo = document.getElementById('emblem-logo');
+        
+        const darkLogoPath = "{{ url_for('static', filename='img/black logo.png') }}";
+        const whiteLogoPath = "{{ url_for('static', filename='img/white logo.png') }}";
+
+        function updateTheme(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                icon.classList.replace('bi-moon-stars', 'bi-sun');
+                if(navLogo) navLogo.src = whiteLogoPath;
+                if(emblemLogo) emblemLogo.src = whiteLogoPath;
+            } else {
+                document.body.classList.remove('dark-mode');
+                icon.classList.replace('bi-sun', 'bi-moon-stars');
+                if(navLogo) navLogo.src = darkLogoPath;
+                if(emblemLogo) emblemLogo.src = darkLogoPath;
+            }
+        }
+
+        // Initialize
+        updateTheme(localStorage.getItem('theme') === 'dark');
+
+        toggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateTheme(isDark);
+        });
+    </script>
+</body>
+</html>

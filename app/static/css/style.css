@@ -1,0 +1,17 @@
+body {
+    font-family: "Inter", system-ui, sans-serif;
+}
+
+h1, h2, h3 {
+    letter-spacing: -0.5px;
+}
+
+table {
+    background: white;
+}
+
+canvas {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+}
